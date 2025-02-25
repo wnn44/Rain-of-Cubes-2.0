@@ -1,18 +1,41 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GenericPool : MonoBehaviour
+public class GenericPool<T> where T : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private Queue<T> _pool = new Queue<T>();
+    private T _prefab;
+
+    public GenericPool(T prefab, int initialSize)
     {
-        
+        _prefab = prefab;
+
+        for (int i = 0; i < initialSize; i++)
+        {
+            T obj = GameObject.Instantiate(_prefab);
+            obj.gameObject.SetActive(false);
+            _pool.Enqueue(obj);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public T Get()
     {
-        
+        if (_pool.Count > 0)
+        {
+            T obj = _pool.Dequeue();
+            obj.gameObject.SetActive(true);
+            return obj;
+        }
+        else
+        {
+            T obj = GameObject.Instantiate(_prefab);
+            return obj;
+        }
+    }
+
+    public void Return(T obj)
+    {
+        obj.gameObject.SetActive(false);
+        _pool.Enqueue(obj);
     }
 }
