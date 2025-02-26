@@ -24,11 +24,13 @@ public class GenericPool<T> where T : MonoBehaviour
         {
             T obj = _pool.Dequeue();
             obj.gameObject.SetActive(true);
+
             return obj;
         }
         else
         {
             T obj = GameObject.Instantiate(_prefab);
+
             return obj;
         }
     }
@@ -36,6 +38,7 @@ public class GenericPool<T> where T : MonoBehaviour
     public void Return(T obj)
     {
         obj.gameObject.SetActive(false);
+
         _pool.Enqueue(obj);
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private Cube _cubePrefab;
+    [SerializeField] private Bomb _bombPrefab;
     [SerializeField] private SpawnPoint _startPoint;
     [SerializeField] private float _repeatRate = 0.3f;
     [SerializeField] private int _initialPoolSize = 5;
@@ -11,10 +12,12 @@ public class GameManager : MonoBehaviour
     private float _startPointMin = -10.0f;
     private float _startPointMax = 10.0f;
     private GenericSpawner<Cube> _cubeSpawner;
+    private GenericSpawner<Bomb> _bombSpawner;
 
     private void Start()
     {
         _cubeSpawner = new GenericSpawner<Cube>(_cubePrefab, _initialPoolSize);
+        _bombSpawner = new GenericSpawner<Bomb>(_bombPrefab, _initialPoolSize);
 
         StartCoroutine(SpawnCubes());
     }
@@ -38,7 +41,8 @@ public class GameManager : MonoBehaviour
 
     private void TakeFromPool()
     {
-        Cube cube = _cubeSpawner.Spawn(StartPoint(), transform.rotation);
+        Cube cube = _cubeSpawner.Spawn(StartPoint(), Quaternion.identity);
+        
         ActionOnGet(cube);
 
         cube.EndedLife += OnRelease;

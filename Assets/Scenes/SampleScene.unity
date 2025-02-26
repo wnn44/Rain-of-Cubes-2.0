@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -153,6 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cubePrefab: {fileID: -4371104095366436826, guid: 81660c309b657484b8d8bdafc987b606, type: 3}
+  _bombPrefab: {fileID: 4910697334252292980, guid: 732e12a252da64507987819a344450d8, type: 3}
   _startPoint: {fileID: 179571195}
   _repeatRate: 0.3
   _initialPoolSize: 5
