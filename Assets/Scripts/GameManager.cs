@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     private float _startPointMax = 10.0f;
     private GenericSpawner<Cube> _cubeSpawner;
 
-    void Start()
+    private void Start()
     {
         _cubeSpawner = new GenericSpawner<Cube>(_cubePrefab, _initialPoolSize);
 
