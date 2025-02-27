@@ -36,7 +36,8 @@ public class GameManager : MonoBehaviour
 
     private void TakeFromPool()
     {
-        Cube cube = _cubeSpawner.Spawn(StartPoint(), transform.rotation);
+        Cube cube = _cubeSpawner.Spawn(StartPoint(), Quaternion.identity);
+        
         ActionOnGet(cube);
 
         cube.EndedLife += OnRelease;

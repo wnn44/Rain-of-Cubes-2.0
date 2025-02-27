@@ -32,4 +32,10 @@ public class Bomb : MonoBehaviour
         EndedLife?.Invoke(this);
     }
 
+    private void Start()
+    {  
+
+    }
+
+
 }
