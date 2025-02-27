@@ -37,12 +37,12 @@ public class GameManager : MonoBehaviour
     private void TakeFromPool()
     {
         Cube cube = _cubeSpawner.Spawn(StartPoint(), Quaternion.identity);
-        
+
         ActionOnGet(cube);
 
         cube.EndedLife += OnRelease;
     }
-    
+
     private void ActionOnGet(Cube cube)
     {
         cube.Init();
@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour
     private void OnRelease(Cube cube)
     {
         Vector3 position = cube.transform.position;
+
         _cubeSpawner.Despawn(cube);
 
         cube.EndedLife -= OnRelease;
@@ -69,9 +70,8 @@ public class GameManager : MonoBehaviour
 
     private void BombSpawn(Vector3 position)
     {
-        Bomb bomb = _bombSpawner.Spawn(StartPoint(), transform.rotation);
+        Bomb bomb = _bombSpawner.Spawn(position, Quaternion.identity);
 
-        bomb.Init(position);
         bomb.EndedLife += OnReleaseBomb;
     }
 
@@ -81,5 +81,4 @@ public class GameManager : MonoBehaviour
 
         bomb.EndedLife -= OnReleaseBomb;
     }
-
 }

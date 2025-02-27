@@ -12,8 +12,10 @@ public class GenericSpawner<T> where T : MonoBehaviour
     public T Spawn(Vector3 position, Quaternion rotation)
     {
         T obj = _pool.Get();
+
         obj.transform.position = position;
         obj.transform.rotation = rotation;
+
         return obj;
     }
 
