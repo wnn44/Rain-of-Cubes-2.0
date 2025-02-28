@@ -1,10 +1,9 @@
 using System.Collections;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class CubeSpawner : MonoBehaviour
 {
     [SerializeField] private Cube _cubePrefab;
-    [SerializeField] private Bomb _bombPrefab;
     [SerializeField] private SpawnPoint _startPoint;
     [SerializeField] private float _repeatRate = 0.3f;
     [SerializeField] private int _initialPoolSize = 5;
@@ -12,12 +11,10 @@ public class GameManager : MonoBehaviour
     private float _startPointMin = -10.0f;
     private float _startPointMax = 10.0f;
     private GenericSpawner<Cube> _cubeSpawner;
-    private GenericSpawner<Bomb> _bombSpawner;
 
     private void Start()
     {
         _cubeSpawner = new GenericSpawner<Cube>(_cubePrefab, _initialPoolSize);
-        _bombSpawner = new GenericSpawner<Bomb>(_bombPrefab, _initialPoolSize);
 
         StartCoroutine(SpawnCubes());
     }
@@ -56,7 +53,7 @@ public class GameManager : MonoBehaviour
 
         cube.EndedLife -= OnRelease;
 
-        BombSpawn(position);
+        //BombSpawn(position);
     }
 
     private Vector3 StartPoint()
@@ -66,19 +63,5 @@ public class GameManager : MonoBehaviour
         float z = UnityEngine.Random.Range(_startPointMin, _startPointMax);
 
         return new Vector3(x, y, z);
-    }
-
-    private void BombSpawn(Vector3 position)
-    {
-        Bomb bomb = _bombSpawner.Spawn(position, Quaternion.identity);
-
-        bomb.EndedLife += OnReleaseBomb;
-    }
-
-    private void OnReleaseBomb(Bomb bomb)
-    {
-        _bombSpawner.Despawn(bomb);
-
-        bomb.EndedLife -= OnReleaseBomb;
     }
 }
