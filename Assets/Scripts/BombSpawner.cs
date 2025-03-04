@@ -1,19 +1,8 @@
 using UnityEngine;
 
-public class BombSpawner : MonoBehaviour
+public class BombSpawner : GenericSpawner<Bomb>
 {
-    [SerializeField] private Bomb _bombPrefab;
-    [SerializeField] private int _initialPoolSize = 5;
     [SerializeField] private CubeSpawner _cubeSpawner;
-
-    private GenericSpawner<Bomb> _bombSpawner;
-
-    private void Awake()
-    {
-        Transform parent = new GameObject("Bomb").transform;
-
-        _bombSpawner = new GenericSpawner<Bomb>(_bombPrefab, parent, 10, 10);
-    }
 
     private void OnEnable()
     {
@@ -27,7 +16,7 @@ public class BombSpawner : MonoBehaviour
 
     private void TakeFromPool(Cube cube)
     {
-        Bomb bomb = _bombSpawner.Spawn();
+        Bomb bomb = Spawn();
 
         bomb.transform.position = cube.transform.position;
 
@@ -36,7 +25,7 @@ public class BombSpawner : MonoBehaviour
 
     private void OnRelease(Bomb bomb)
     {
-        _bombSpawner.Despawn(bomb);
+        Despawn(bomb);
 
         bomb.EndedLifeBomb -= OnRelease;
     }

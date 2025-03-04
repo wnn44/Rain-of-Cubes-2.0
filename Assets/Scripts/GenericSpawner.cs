@@ -1,31 +1,30 @@
 using UnityEngine;
 using UnityEngine.Pool;
 
-public class GenericSpawner<T> where T : MonoBehaviour
+public class GenericSpawner<T> : MonoBehaviour where T : MonoBehaviour
 {
+    [SerializeField] private T _prefab;
+    [SerializeField] private Transform  _parent;
+    [SerializeField] private int _defaultCapacity = 10;
+    [SerializeField] private int _maxSize = 100;
+
     private ObjectPool<T> _pool;
-    private T _prefab;
-    private Transform _parent;
 
-    public GenericSpawner(T prefab, Transform parent = null, int defaultCapacity = 10, int maxSize = 100)
+    public GenericSpawner()
     {
-        _prefab = prefab;
-        _parent = parent;
-
         _pool = new ObjectPool<T>(
             createFunc: CreateObject,
             actionOnGet: OnGetObject,
             actionOnRelease: OnReleaseObject,
             actionOnDestroy: OnDestroyObject,
             collectionCheck: true,
-            defaultCapacity: defaultCapacity,
-            maxSize: maxSize
+            defaultCapacity: _defaultCapacity,
+            maxSize: _maxSize
         );
     }
 
     public T Spawn()
     {
-        Debug.Log(_pool + "   " + _pool.CountAll + "  взяли");
         return _pool.Get();
     }
 

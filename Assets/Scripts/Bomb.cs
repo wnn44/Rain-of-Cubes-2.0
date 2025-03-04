@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Drawing;
 using UnityEngine;
 
 [RequireComponent(typeof(Renderer))]
@@ -9,24 +8,17 @@ public class Bomb : MonoBehaviour
     private float _minTime = 2.0f;
     private float _maxTime = 5.0f;
     private Renderer _renderer;
-    private UnityEngine.Color _color;
+    private Color _color;
 
     public event Action<Bomb> EndedLifeBomb;
 
-    private void Awake()
+    private void OnEnable()
     {
         _renderer = GetComponent<Renderer>();
 
         float delay = UnityEngine.Random.Range(_minTime, _maxTime);
-        StartCoroutine(Delay(delay));
-    }
 
-    public void Init()
-    {
-        _color.a = 1f;
-        _color = _renderer.material.color;
-       // _rigidbody.velocity = Vector3.zero;
-        //transform.rotation = Quaternion.identity;
+        StartCoroutine(Delay(delay));
     }
 
     private IEnumerator Delay(float delay)
@@ -45,9 +37,6 @@ public class Bomb : MonoBehaviour
             yield return null;
         }
 
-
-        //yield return new WaitForSeconds(delay);
-        Debug.Log("Улетело");
         EndedLifeBomb?.Invoke(this);
     }
 }

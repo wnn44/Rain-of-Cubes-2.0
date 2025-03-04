@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -152,10 +152,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7e247e14a69bbf4fa407c9608c8bb9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cubePrefab: {fileID: -4371104095366436826, guid: 81660c309b657484b8d8bdafc987b606, type: 3}
+  _prefab: {fileID: -4371104095366436826, guid: 81660c309b657484b8d8bdafc987b606, type: 3}
+  _parent: {fileID: 196827568}
+  _defaultCapacity: 10
+  _maxSize: 100
   _spawnPoint: {fileID: 179571195}
   _repeatRate: 0.3
-  _initialPoolSize: 5
 --- !u!4 &12021178
 Transform:
   m_ObjectHideFlags: 0
@@ -215,6 +217,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5822ecec45d1c3b4d87453221e439473, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &196827567
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 196827568}
+  m_Layer: 0
+  m_Name: Cubes
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &196827568
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 196827567}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &242171159
 GameObject:
   m_ObjectHideFlags: 0
@@ -244,8 +277,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3aa7b85ddff0894fa8f23a4fd4326b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bombPrefab: {fileID: 4419776608295810234, guid: c72a25c34545c69479bf087dfb4f8da4, type: 3}
-  _initialPoolSize: 5
+  _prefab: {fileID: 4419776608295810234, guid: c72a25c34545c69479bf087dfb4f8da4, type: 3}
+  _parent: {fileID: 1175364968}
+  _defaultCapacity: 10
+  _maxSize: 100
   _cubeSpawner: {fileID: 12021177}
 --- !u!4 &242171161
 Transform:
@@ -578,6 +613,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1175364967
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1175364968}
+  m_Layer: 0
+  m_Name: Bombs
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1175364968
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1175364967}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1482164854
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -651,3 +717,5 @@ SceneRoots:
   - {fileID: 875661483}
   - {fileID: 454171754}
   - {fileID: 242171161}
+  - {fileID: 196827568}
+  - {fileID: 1175364968}
