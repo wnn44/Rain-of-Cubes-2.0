@@ -13,11 +13,13 @@ public class CubeSpawner : MonoBehaviour
     private float _spawnPointMax = 10.0f;
     private GenericSpawner<Cube> _cubeSpawner;
 
-    public event Action<Vector3> CubeReturnedToPool;
+    public event Action<Cube> CubeEnded;
 
-    private void Start()
+    private void Awake()
     {
-        _cubeSpawner = new GenericSpawner<Cube>(_cubePrefab, _initialPoolSize);
+        Transform parent = new GameObject("Cube").transform;
+
+        _cubeSpawner = new GenericSpawner<Cube>(_cubePrefab, parent, 10, 100);
 
         StartCoroutine(SpawnCubes());
     }
@@ -36,7 +38,7 @@ public class CubeSpawner : MonoBehaviour
 
     private void TakeFromPool()
     {
-        Cube cube = _cubeSpawner.Spawn(StartPoint(), Quaternion.identity);
+        Cube cube = _cubeSpawner.Spawn();
 
         ActionOnGet(cube);
 
@@ -45,7 +47,7 @@ public class CubeSpawner : MonoBehaviour
 
     private void ActionOnGet(Cube cube)
     {
-        cube.Init();
+        cube.Init(StartPoint());
     }
 
     private void OnRelease(Cube cube)
@@ -56,7 +58,7 @@ public class CubeSpawner : MonoBehaviour
 
         cube.EndedLife -= OnRelease;
 
-        CubeReturnedToPool?.Invoke(position);
+        CubeEnded?.Invoke(cube);
     }
 
     private Vector3 StartPoint()

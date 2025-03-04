@@ -3,6 +3,7 @@ using System.Collections;
 using System.Drawing;
 using UnityEngine;
 
+[RequireComponent(typeof(Renderer))]
 public class Bomb : MonoBehaviour
 {
     private float _minTime = 2.0f;
@@ -15,32 +16,37 @@ public class Bomb : MonoBehaviour
     private void Start()
     {
         _renderer = GetComponent<Renderer>();
-        //_color.a = 1f;
-        //_color = _renderer.material.color;
+
         float delay = UnityEngine.Random.Range(_minTime, _maxTime);
         StartCoroutine(Delay(delay));
+    }
 
+    public void Init()
+    {
+        _color.a = 1f;
+        _color = _renderer.material.color;
+       // _rigidbody.velocity = Vector3.zero;
+        //transform.rotation = Quaternion.identity;
     }
 
     private IEnumerator Delay(float delay)
     {
-        //float elapsedTime = 0f;
+        float elapsedTime = 0f;
 
-        // _color = _renderer.material.color;
+        _color = _renderer.material.color;
 
-        //while (elapsedTime <= delay)
-        //{
-        //    float normalizedTime = elapsedTime / delay;
-        //    elapsedTime += Time.deltaTime;
-        //    _color.a = Mathf.Lerp(1f, 0f, normalizedTime);
-        //    _renderer.material.color = _color;
+        while (elapsedTime <= delay)
+        {
+            float normalizedTime = elapsedTime / delay;
+            elapsedTime += Time.deltaTime;
+            _color.a = Mathf.Lerp(1f, 0f, normalizedTime);
+            _renderer.material.color = _color;
 
-        //    yield return null;
-        //}
+            yield return null;
+        }
 
 
-        yield return new WaitForSeconds(delay);
-    
+        //yield return new WaitForSeconds(delay);
         EndedLifeBomb?.Invoke(this);
     }
 }

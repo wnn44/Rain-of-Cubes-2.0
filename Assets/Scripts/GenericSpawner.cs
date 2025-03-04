@@ -1,26 +1,57 @@
 using UnityEngine;
+using UnityEngine.Pool;
 
 public class GenericSpawner<T> where T : MonoBehaviour
 {
-    private GenericPool<T> _pool;
+    private ObjectPool<T> _pool;
+    private T _prefab;
+    private Transform _parent;
 
-    public GenericSpawner(T prefab, int initialPoolSize)
+    public GenericSpawner(T prefab, Transform parent = null, int defaultCapacity = 10, int maxSize = 100)
     {
-        _pool = new GenericPool<T>(prefab, initialPoolSize);
+        _prefab = prefab;
+        _parent = parent;
+        
+        _pool = new ObjectPool<T>(
+            createFunc: CreateObject,
+            actionOnGet: OnGetObject,
+            actionOnRelease: OnReleaseObject,
+            actionOnDestroy: OnDestroyObject,
+            collectionCheck: true,
+            defaultCapacity: defaultCapacity,
+            maxSize: maxSize
+        );
     }
 
-    public T Spawn(Vector3 position, Quaternion rotation)
+    public T Spawn()
     {
-        T obj = _pool.Get();
-
-        obj.transform.position = position;
-        obj.transform.rotation = rotation;
-
-        return obj;
+        return _pool.Get();
     }
 
     public void Despawn(T obj)
     {
-        _pool.Return(obj);
+        _pool.Release(obj);
+    }
+
+    private T CreateObject()
+    {
+        T newObject = Object.Instantiate(_prefab, _parent);
+        newObject.gameObject.SetActive(false);
+        return newObject;
+    }
+
+    private void OnGetObject(T obj)
+    {
+        obj.gameObject.SetActive(true);
+    }
+
+    private void OnReleaseObject(T obj)
+    {
+        obj.gameObject.SetActive(false);
+    }
+
+    private void OnDestroyObject(T obj)
+    {
+        Object.Destroy(obj.gameObject);
     }
 }

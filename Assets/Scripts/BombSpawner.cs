@@ -1,36 +1,50 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BombSpawner : MonoBehaviour
 {
     [SerializeField] private Bomb _bombPrefab;
     [SerializeField] private int _initialPoolSize = 5;
+    [SerializeField] private CubeSpawner _cubeSpawner;
 
     private GenericSpawner<Bomb> _bombSpawner;
-    private CubeSpawner _cubeSpawner;
 
-    private void Start()
+    private void Awake()
     {
-        _bombSpawner = new GenericSpawner<Bomb>(_bombPrefab, _initialPoolSize);
-        _cubeSpawner = new CubeSpawner();
+        Transform parent = new GameObject("Bomb").transform;
 
-        //StartCoroutine(SpawnCubes());
+        _bombSpawner = new GenericSpawner<Bomb>(_bombPrefab, parent, 10, 100);
     }
 
     private void OnEnable()
     {
-        _cubeSpawner.CubeReturnedToPool += TakeFromPool;
-        Debug.Log("+");
-
+        _cubeSpawner.CubeEnded += TakeFromPool;
     }
 
-    private void TakeFromPool(Vector3 spawnPoint)
+    private void OnDisable()
     {
-        Debug.Log("Spawn");
-        Bomb bomb = _bombSpawner.Spawn(spawnPoint, Quaternion.identity);
-
-
+        _cubeSpawner.CubeEnded -= TakeFromPool;
     }
 
+    private void ActionOnGet(Bomb bomb)
+    {
+        //        bomb.Init(cube.transform.position);
+    }
+
+    private void TakeFromPool(Cube cube)
+    {
+        Bomb bomb = _bombSpawner.Spawn();
+
+        bomb.transform.position = cube.transform.position;
+
+        ActionOnGet(bomb);
+
+        bomb.EndedLifeBomb += OnRelease;
+    }
+
+    private void OnRelease(Bomb bomb)
+    {
+        _bombSpawner.Despawn(bomb);
+
+        bomb.EndedLifeBomb -= OnRelease;
+    }
 }

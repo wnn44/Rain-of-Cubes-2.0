@@ -20,12 +20,13 @@ public class Cube : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
     }
 
-    public void Init()
+    public void Init(Vector3 position)
     {
         _hasCollided = false;
         _renderer.material.color = _initialColor;
         _rigidbody.velocity = Vector3.zero;
         transform.rotation = Quaternion.identity;
+        transform.position = position;
     }
 
     private void OnCollisionEnter(Collision collision)
