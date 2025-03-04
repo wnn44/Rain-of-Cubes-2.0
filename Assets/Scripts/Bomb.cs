@@ -13,7 +13,7 @@ public class Bomb : MonoBehaviour
 
     public event Action<Bomb> EndedLifeBomb;
 
-    private void Start()
+    private void Awake()
     {
         _renderer = GetComponent<Renderer>();
 
@@ -47,6 +47,7 @@ public class Bomb : MonoBehaviour
 
 
         //yield return new WaitForSeconds(delay);
+        Debug.Log("Улетело");
         EndedLifeBomb?.Invoke(this);
     }
 }

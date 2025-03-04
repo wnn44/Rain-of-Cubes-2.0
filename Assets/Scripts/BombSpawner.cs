@@ -12,7 +12,7 @@ public class BombSpawner : MonoBehaviour
     {
         Transform parent = new GameObject("Bomb").transform;
 
-        _bombSpawner = new GenericSpawner<Bomb>(_bombPrefab, parent, 10, 100);
+        _bombSpawner = new GenericSpawner<Bomb>(_bombPrefab, parent, 10, 10);
     }
 
     private void OnEnable()
@@ -25,18 +25,11 @@ public class BombSpawner : MonoBehaviour
         _cubeSpawner.CubeEnded -= TakeFromPool;
     }
 
-    private void ActionOnGet(Bomb bomb)
-    {
-        //        bomb.Init(cube.transform.position);
-    }
-
     private void TakeFromPool(Cube cube)
     {
         Bomb bomb = _bombSpawner.Spawn();
 
         bomb.transform.position = cube.transform.position;
-
-        ActionOnGet(bomb);
 
         bomb.EndedLifeBomb += OnRelease;
     }

@@ -11,7 +11,7 @@ public class GenericSpawner<T> where T : MonoBehaviour
     {
         _prefab = prefab;
         _parent = parent;
-        
+
         _pool = new ObjectPool<T>(
             createFunc: CreateObject,
             actionOnGet: OnGetObject,
@@ -25,6 +25,7 @@ public class GenericSpawner<T> where T : MonoBehaviour
 
     public T Spawn()
     {
+        Debug.Log(_pool + "   " + _pool.CountAll + "  взяли");
         return _pool.Get();
     }
 
