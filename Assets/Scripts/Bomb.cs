@@ -9,12 +9,14 @@ public class Bomb : MonoBehaviour
     private float _maxTime = 5.0f;
     private Renderer _renderer;
     private Color _color;
+    private Detonator _detonator;
 
     public event Action<Bomb> EndedLifeBomb;
 
     private void OnEnable()
     {
         _renderer = GetComponent<Renderer>();
+        _detonator = GetComponent<Detonator>();
 
         float delay = UnityEngine.Random.Range(_minTime, _maxTime);
 
@@ -37,6 +39,7 @@ public class Bomb : MonoBehaviour
             yield return null;
         }
 
+        _detonator.Explode();
         EndedLifeBomb?.Invoke(this);
     }
 }
