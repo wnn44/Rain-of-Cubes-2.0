@@ -8,9 +8,9 @@ public class GenericSpawner<T> : MonoBehaviour where T : MonoBehaviour
     [SerializeField] private int _defaultCapacity = 10;
     [SerializeField] private int _maxSize = 100;
 
-    public int CreateAll { get; private set; }
-    public int SpawnAll { get; private set; }
-    public int Live { get; private set; }
+    public int TotalCreated { get; private set; }
+    public int TotalSpawned { get; private set; }
+    public int ActiveObjacts { get; private set; }
 
     private ObjectPool<T> _pool;
 
@@ -29,19 +29,21 @@ public class GenericSpawner<T> : MonoBehaviour where T : MonoBehaviour
 
     public T Spawn()
     {
-        SpawnAll++;
+        TotalSpawned++;
+
         return _pool.Get();
     }
 
     public void Despawn(T obj)
     {
         _pool.Release(obj);
-        Live--;
+
+        ActiveObjacts--;
     }
 
     private void Update()
     {
-        CreateAll = _pool.CountAll;
+        TotalCreated = _pool.CountAll;
     }
 
     private T CreateObject()
@@ -55,7 +57,8 @@ public class GenericSpawner<T> : MonoBehaviour where T : MonoBehaviour
     private void OnGetObject(T obj)
     {
         obj.gameObject.SetActive(true);
-        Live++;
+
+        ActiveObjacts++;
     }
 
     private void OnReleaseObject(T obj)

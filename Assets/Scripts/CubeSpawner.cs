@@ -19,7 +19,7 @@ public class CubeSpawner : GenericSpawner<Cube>
 
     private void LateUpdate()
     {
-        Debug.Log("Созжано всего кубов " + CreateAll + "   заспавнено всего " + SpawnAll + "  " + Live);
+        Debug.Log("Созжано всего кубов " + TotalCreated + "   заспавнено всего " + TotalSpawned + "  " + ActiveObjacts);
     }
 
     private IEnumerator SpawnCubes()

@@ -16,7 +16,7 @@ public class BombSpawner : GenericSpawner<Bomb>
 
     private void LateUpdate()
     {
-        Debug.Log("Созжано всего бомб" + CreateAll + "   заспавнено всего " + SpawnAll + "  " + Live);
+        Debug.Log("Созжано всего бомб" + TotalCreated + "   заспавнено всего " + TotalSpawned + "  " + ActiveObjacts);
     }
 
     private void TakeFromPool(Cube cube)
