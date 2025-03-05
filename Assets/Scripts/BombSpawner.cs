@@ -14,6 +14,11 @@ public class BombSpawner : GenericSpawner<Bomb>
         _cubeSpawner.CubeEnded -= TakeFromPool;
     }
 
+    private void LateUpdate()
+    {
+        Debug.Log("Созжано всего бомб" + CreateAll + "   заспавнено всего " + SpawnAll + "  " + Live);
+    }
+
     private void TakeFromPool(Cube cube)
     {
         Bomb bomb = Spawn();

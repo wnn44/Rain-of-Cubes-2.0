@@ -4,9 +4,13 @@ using UnityEngine.Pool;
 public class GenericSpawner<T> : MonoBehaviour where T : MonoBehaviour
 {
     [SerializeField] private T _prefab;
-    [SerializeField] private Transform  _parent;
+    [SerializeField] private Transform _parent;
     [SerializeField] private int _defaultCapacity = 10;
     [SerializeField] private int _maxSize = 100;
+
+    public int CreateAll { get; private set; }
+    public int SpawnAll { get; private set; }
+    public int Live { get; private set; }
 
     private ObjectPool<T> _pool;
 
@@ -25,24 +29,33 @@ public class GenericSpawner<T> : MonoBehaviour where T : MonoBehaviour
 
     public T Spawn()
     {
+        SpawnAll++;
         return _pool.Get();
     }
 
     public void Despawn(T obj)
     {
         _pool.Release(obj);
+        Live--;
+    }
+
+    private void Update()
+    {
+        CreateAll = _pool.CountAll;
     }
 
     private T CreateObject()
     {
         T newObject = Object.Instantiate(_prefab, _parent);
         newObject.gameObject.SetActive(false);
+
         return newObject;
     }
 
     private void OnGetObject(T obj)
     {
         obj.gameObject.SetActive(true);
+        Live++;
     }
 
     private void OnReleaseObject(T obj)

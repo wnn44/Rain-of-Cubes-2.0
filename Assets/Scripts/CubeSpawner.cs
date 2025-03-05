@@ -17,6 +17,11 @@ public class CubeSpawner : GenericSpawner<Cube>
         StartCoroutine(SpawnCubes());
     }
 
+    private void LateUpdate()
+    {
+        Debug.Log("Созжано всего кубов " + CreateAll + "   заспавнено всего " + SpawnAll + "  " + Live);
+    }
+
     private IEnumerator SpawnCubes()
     {
         WaitForSeconds waitForSeconds = new WaitForSeconds(_repeatRate);

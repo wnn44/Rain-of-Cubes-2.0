@@ -15334,7 +15334,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _explosionRadius: 20
   _explosionForce: 300
-  _effect: {fileID: 0}
+  _effect: {fileID: 1861730318444630541, guid: 171bfe184c85f924ba38946e11af8570, type: 3}
   _upwardModifier: 50
 --- !u!4 &4446686135327488983 stripped
 Transform:
