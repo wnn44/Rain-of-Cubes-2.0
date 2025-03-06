@@ -10,7 +10,7 @@ public class CubeSpawner : GenericSpawner<Cube>
     private float _spawnPointMin = -10.0f;
     private float _spawnPointMax = 10.0f;
 
-    public event Action<Cube> CubeEnded;
+    public event Action<Cube> CubeOnRelease;
 
     private void Awake()
     {
@@ -19,7 +19,7 @@ public class CubeSpawner : GenericSpawner<Cube>
 
     private IEnumerator SpawnCubes()
     {
-        WaitForSeconds waitForSeconds = new WaitForSeconds(_repeatRate);
+        WaitForSeconds waitForSeconds = new(_repeatRate);
 
         while (enabled)
         {
@@ -35,7 +35,7 @@ public class CubeSpawner : GenericSpawner<Cube>
 
         ActionOnGet(cube);
 
-        cube.EndedLife += OnRelease;
+        cube.CubeDisappeared += OnRelease;
     }
 
     private void ActionOnGet(Cube cube)
@@ -49,9 +49,9 @@ public class CubeSpawner : GenericSpawner<Cube>
 
         Despawn(cube);
 
-        cube.EndedLife -= OnRelease;
+        cube.CubeDisappeared -= OnRelease;
 
-        CubeEnded?.Invoke(cube);
+        CubeOnRelease?.Invoke(cube);
     }
 
     private Vector3 StartPoint()

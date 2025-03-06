@@ -11,7 +11,7 @@ public class Bomb : MonoBehaviour
     private Color _color;
     private Detonator _detonator;
 
-    public event Action<Bomb> EndedLifeBomb;
+    public event Action<Bomb> Exploded;
 
     private void OnEnable()
     {
@@ -40,6 +40,7 @@ public class Bomb : MonoBehaviour
         }
 
         _detonator.Explode();
-        EndedLifeBomb?.Invoke(this);
+
+        Exploded?.Invoke(this);
     }
 }

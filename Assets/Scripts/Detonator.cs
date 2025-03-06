@@ -5,8 +5,8 @@ public class Detonator : MonoBehaviour
 {
     [SerializeField] private float _explosionRadius;
     [SerializeField] private float _explosionForce;
-    [SerializeField] private ParticleSystem _effect;
     [SerializeField] private float _upwardModifier;
+    [SerializeField] private ParticleSystem _effect;
 
     public void Explode()
     {
@@ -14,6 +14,8 @@ public class Detonator : MonoBehaviour
         {
             explodubleObject.AddExplosionForce(_explosionForce, transform.position, _explosionRadius, _upwardModifier);
         }
+
+        Instantiate(_effect, transform.position, transform.rotation);
     }
 
     private List<Rigidbody> GetExplodableObjects()

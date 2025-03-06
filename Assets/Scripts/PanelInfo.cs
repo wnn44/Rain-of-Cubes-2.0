@@ -17,10 +17,10 @@ public class PanelInfo : MonoBehaviour
     {
         _totalSpawnedCube.text = _cubeSpavner.TotalSpawned.ToString();
         _totalCreatedCube.text = _cubeSpavner.TotalCreated.ToString();
-        _activeObjactsCube.text = _cubeSpavner.ActiveObjacts.ToString();
+        _activeObjactsCube.text = _cubeSpavner.ActiveObjects.ToString();
 
         _totalSpawnedBomb.text = _bombSpavner.TotalSpawned.ToString();
         _totalCreatedBomb.text = _bombSpavner.TotalCreated.ToString();
-        _activeObjactsBomb.text = _bombSpavner.ActiveObjacts.ToString();
+        _activeObjactsBomb.text = _bombSpavner.ActiveObjects.ToString();
     }
 }

@@ -10,7 +10,7 @@ public class GenericSpawner<T> : MonoBehaviour where T : MonoBehaviour
 
     public int TotalCreated { get; private set; }
     public int TotalSpawned { get; private set; }
-    public int ActiveObjacts { get; private set; }
+    public int ActiveObjects { get; private set; }
 
     private ObjectPool<T> _pool;
 
@@ -38,7 +38,7 @@ public class GenericSpawner<T> : MonoBehaviour where T : MonoBehaviour
     {
         _pool.Release(obj);
 
-        ActiveObjacts--;
+        ActiveObjects--;
     }
 
     private void Update()
@@ -58,7 +58,7 @@ public class GenericSpawner<T> : MonoBehaviour where T : MonoBehaviour
     {
         obj.gameObject.SetActive(true);
 
-        ActiveObjacts++;
+        ActiveObjects++;
     }
 
     private void OnReleaseObject(T obj)

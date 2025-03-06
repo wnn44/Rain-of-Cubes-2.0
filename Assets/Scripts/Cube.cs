@@ -6,13 +6,13 @@ using UnityEngine;
 public class Cube : MonoBehaviour
 {
     private bool _hasCollided = false;
-    private Renderer _renderer;
-    private Color _initialColor = Color.red;
     private float _minTime = 2.0f;
     private float _maxTime = 5.0f;
+    private Renderer _renderer;
     private Rigidbody _rigidbody;
+    private Color _initialColor = Color.red;
 
-    public event Action<Cube> EndedLife;
+    public event Action<Cube> CubeDisappeared;
 
     private void Awake()
     {
@@ -34,6 +34,7 @@ public class Cube : MonoBehaviour
         if (_hasCollided == false && collision.gameObject.TryGetComponent(out Platform platform))
         {
             _hasCollided = true;
+
             _renderer.material.color = UnityEngine.Random.ColorHSV();
 
             float delay = UnityEngine.Random.Range(_minTime, _maxTime);
@@ -45,6 +46,6 @@ public class Cube : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
 
-        EndedLife?.Invoke(this);
+        CubeDisappeared?.Invoke(this);
     }
 }

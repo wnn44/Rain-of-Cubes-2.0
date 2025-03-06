@@ -157,7 +157,7 @@ MonoBehaviour:
   _defaultCapacity: 10
   _maxSize: 100
   _spawnPoint: {fileID: 179571195}
-  _repeatRate: 0.3
+  _repeatRate: 0.4
 --- !u!4 &12021178
 Transform:
   m_ObjectHideFlags: 0

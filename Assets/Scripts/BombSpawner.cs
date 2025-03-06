@@ -6,12 +6,12 @@ public class BombSpawner : GenericSpawner<Bomb>
 
     private void OnEnable()
     {
-        _cubeSpawner.CubeEnded += TakeFromPool;
+        _cubeSpawner.CubeOnRelease += TakeFromPool;
     }
 
     private void OnDisable()
     {
-        _cubeSpawner.CubeEnded -= TakeFromPool;
+        _cubeSpawner.CubeOnRelease -= TakeFromPool;
     }
 
     private void TakeFromPool(Cube cube)
@@ -20,13 +20,13 @@ public class BombSpawner : GenericSpawner<Bomb>
 
         bomb.transform.position = cube.transform.position;
 
-        bomb.EndedLifeBomb += OnRelease;
+        bomb.Exploded += OnRelease;
     }
 
     private void OnRelease(Bomb bomb)
     {
         Despawn(bomb);
 
-        bomb.EndedLifeBomb -= OnRelease;
+        bomb.Exploded -= OnRelease;
     }
 }
