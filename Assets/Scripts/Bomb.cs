@@ -2,22 +2,36 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(Renderer))]
+[RequireComponent(typeof(ColorChanger), typeof(ColorChanger))]
 public class Bomb : MonoBehaviour
 {
+    private Detonator _detonator;
+    private ColorChanger _colorChanger;
     private float _minTime = 2.0f;
     private float _maxTime = 5.0f;
-    private Renderer _renderer;
-    private Color _color;
-    private Detonator _detonator;
 
     public event Action<Bomb> Exploded;
 
     private void OnEnable()
     {
-        _renderer = GetComponent<Renderer>();
-        _detonator = GetComponent<Detonator>();
+        ChangingTransparency();
+    }
 
+    private void Awake()
+    {
+        _colorChanger = GetComponent<ColorChanger>();
+        _detonator = GetComponent<Detonator>();
+    }
+
+    private void Explode()
+    {
+        _detonator.Explode();
+
+        Exploded?.Invoke(this);
+    }
+
+    public void ChangingTransparency()
+    {
         float delay = UnityEngine.Random.Range(_minTime, _maxTime);
 
         StartCoroutine(Delay(delay));
@@ -27,20 +41,15 @@ public class Bomb : MonoBehaviour
     {
         float elapsedTime = 0f;
 
-        _color = _renderer.material.color;
-
         while (elapsedTime <= delay)
         {
             float normalizedTime = elapsedTime / delay;
             elapsedTime += Time.deltaTime;
-            _color.a = Mathf.Lerp(1f, 0f, normalizedTime);
-            _renderer.material.color = _color;
+            _colorChanger.ChangingTransparency(normalizedTime);
 
             yield return null;
         }
 
-        _detonator.Explode();
-
-        Exploded?.Invoke(this);
+        Explode();
     }
 }

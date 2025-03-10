@@ -2,28 +2,27 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(Renderer), typeof(Rigidbody))]
+[RequireComponent(typeof(Rigidbody), typeof(ColorChanger))]
 public class Cube : MonoBehaviour
 {
     private bool _hasCollided = false;
     private float _minTime = 2.0f;
     private float _maxTime = 5.0f;
-    private Renderer _renderer;
     private Rigidbody _rigidbody;
-    private Color _initialColor = Color.red;
+    private ColorChanger _colorChanger;
 
     public event Action<Cube> CubeDisappeared;
 
     private void Awake()
     {
-        _renderer = GetComponent<Renderer>();
         _rigidbody = GetComponent<Rigidbody>();
+        _colorChanger= GetComponent<ColorChanger>();
     }
 
     public void Init(Vector3 position)
     {
         _hasCollided = false;
-        _renderer.material.color = _initialColor;
+        _colorChanger.InitColor();
         _rigidbody.velocity = Vector3.zero;
         transform.rotation = Quaternion.identity;
         transform.position = position;
@@ -35,7 +34,7 @@ public class Cube : MonoBehaviour
         {
             _hasCollided = true;
 
-            _renderer.material.color = UnityEngine.Random.ColorHSV();
+            _colorChanger.RandomColor();
 
             float delay = UnityEngine.Random.Range(_minTime, _maxTime);
             StartCoroutine(Delay(delay));
