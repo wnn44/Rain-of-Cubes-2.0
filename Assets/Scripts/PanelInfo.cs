@@ -1,26 +1,27 @@
 using TMPro;
 using UnityEngine;
 
-public class PanelInfo : MonoBehaviour
+public class PanelInfo<T> : MonoBehaviour where T : MonoBehaviour
 {
-    [SerializeField] private CubeSpawner _cubeSpavner;
-    [SerializeField] private TextMeshProUGUI _totalSpawnedCube;
-    [SerializeField] private TextMeshProUGUI _totalCreatedCube;
-    [SerializeField] private TextMeshProUGUI _activeObjactsCube;
+    [SerializeField] private GenericSpawner<T> _spawner;
+    [SerializeField] private TextMeshProUGUI _totalSpawned;
+    [SerializeField] private TextMeshProUGUI _totalCreated;
+    [SerializeField] private TextMeshProUGUI _activeObjacts;
 
-    [SerializeField] private BombSpawner _bombSpavner;
-    [SerializeField] private TextMeshProUGUI _totalSpawnedBomb;
-    [SerializeField] private TextMeshProUGUI _totalCreatedBomb;
-    [SerializeField] private TextMeshProUGUI _activeObjactsBomb;
-
-    private void LateUpdate()
+    private void OnEnable()
     {
-        _totalSpawnedCube.text = _cubeSpavner.TotalSpawned.ToString();
-        _totalCreatedCube.text = _cubeSpavner.TotalCreated.ToString();
-        _activeObjactsCube.text = _cubeSpavner.ActiveObjects.ToString();
+        _spawner.DataChanged += UpdateView;
+    }
 
-        _totalSpawnedBomb.text = _bombSpavner.TotalSpawned.ToString();
-        _totalCreatedBomb.text = _bombSpavner.TotalCreated.ToString();
-        _activeObjactsBomb.text = _bombSpavner.ActiveObjects.ToString();
+    private void OnDisable()
+    {
+        _spawner.DataChanged -= UpdateView;
+    }
+
+    private void UpdateView()
+    {
+        _totalSpawned.text = _spawner.TotalSpawned.ToString();
+        _totalCreated.text = _spawner.TotalCreated.ToString();
+        _activeObjacts.text = _spawner.ActiveObjects.ToString();
     }
 }

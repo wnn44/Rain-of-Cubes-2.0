@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -13,6 +14,8 @@ public class GenericSpawner<T> : MonoBehaviour where T : MonoBehaviour
     public int ActiveObjects { get; private set; }
 
     private ObjectPool<T> _pool;
+
+    public event Action DataChanged;
 
     public GenericSpawner()
     {
@@ -48,7 +51,7 @@ public class GenericSpawner<T> : MonoBehaviour where T : MonoBehaviour
 
     private T CreateObject()
     {
-        T newObject = Object.Instantiate(_prefab, _parent);
+        T newObject = UnityEngine.Object.Instantiate(_prefab, _parent);
         newObject.gameObject.SetActive(false);
 
         return newObject;
@@ -59,6 +62,7 @@ public class GenericSpawner<T> : MonoBehaviour where T : MonoBehaviour
         obj.gameObject.SetActive(true);
 
         ActiveObjects++;
+        UpdateInfoPanel();
     }
 
     private void OnReleaseObject(T obj)
@@ -68,6 +72,11 @@ public class GenericSpawner<T> : MonoBehaviour where T : MonoBehaviour
 
     private void OnDestroyObject(T obj)
     {
-        Object.Destroy(obj.gameObject);
+        UnityEngine.Object.Destroy(obj.gameObject);
+    }
+
+    private void UpdateInfoPanel()
+    {
+        DataChanged?.Invoke();
     }
 }
