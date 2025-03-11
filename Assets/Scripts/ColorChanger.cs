@@ -1,6 +1,4 @@
-using System.Collections;
 using UnityEngine;
-using UnityEngine.Events;
 
 [RequireComponent(typeof(Renderer))]
 public class ColorChanger : MonoBehaviour
@@ -12,6 +10,11 @@ public class ColorChanger : MonoBehaviour
     private void Awake()
     {
         _renderer = GetComponent<Renderer>();
+    }
+
+    private void Start()
+    {
+        _color =_renderer.material.color;
     }
 
     public void RandomColor()
@@ -29,5 +32,4 @@ public class ColorChanger : MonoBehaviour
         _color.a = Mathf.Lerp(1f, 0f, normalizedTime);
         _renderer.material.color = _color;
     }
-
 }

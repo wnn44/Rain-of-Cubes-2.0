@@ -20,6 +20,8 @@ public class BombSpawner : GenericSpawner<Bomb>
 
         bomb.transform.position = cube.transform.position;
 
+        bomb.LifeCycle();
+
         bomb.Exploded += OnRelease;
     }
 

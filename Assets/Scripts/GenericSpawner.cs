@@ -7,7 +7,7 @@ public class GenericSpawner<T> : MonoBehaviour where T : MonoBehaviour
     [SerializeField] private T _prefab;
     [SerializeField] private Transform _parent;
     [SerializeField] private int _defaultCapacity = 10;
-    [SerializeField] private int _maxSize = 100;
+    [SerializeField] private int _maxSize = 15;
 
     public int TotalCreated { get; private set; }
     public int TotalSpawned { get; private set; }
@@ -30,6 +30,11 @@ public class GenericSpawner<T> : MonoBehaviour where T : MonoBehaviour
         );
     }
 
+    private void Update()
+    {
+        TotalCreated = _pool.CountAll;
+    }
+
     public T Spawn()
     {
         TotalSpawned++;
@@ -42,11 +47,6 @@ public class GenericSpawner<T> : MonoBehaviour where T : MonoBehaviour
         _pool.Release(obj);
 
         ActiveObjects--;
-    }
-
-    private void Update()
-    {
-        TotalCreated = _pool.CountAll;
     }
 
     private T CreateObject()
@@ -72,7 +72,7 @@ public class GenericSpawner<T> : MonoBehaviour where T : MonoBehaviour
 
     private void OnDestroyObject(T obj)
     {
-        UnityEngine.Object.Destroy(obj.gameObject);
+        UnityEngine.Object.Destroy(obj);
     }
 
     private void UpdateInfoPanel()

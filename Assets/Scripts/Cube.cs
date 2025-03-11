@@ -19,15 +19,6 @@ public class Cube : MonoBehaviour
         _colorChanger= GetComponent<ColorChanger>();
     }
 
-    public void Init(Vector3 position)
-    {
-        _hasCollided = false;
-        _colorChanger.InitColor();
-        _rigidbody.velocity = Vector3.zero;
-        transform.rotation = Quaternion.identity;
-        transform.position = position;
-    }
-
     private void OnCollisionEnter(Collision collision)
     {
         if (_hasCollided == false && collision.gameObject.TryGetComponent(out Platform platform))
@@ -39,6 +30,15 @@ public class Cube : MonoBehaviour
             float delay = UnityEngine.Random.Range(_minTime, _maxTime);
             StartCoroutine(Delay(delay));
         }
+    }
+
+    public void Init(Vector3 position)
+    {
+        _hasCollided = false;
+        _colorChanger.InitColor();
+        _rigidbody.velocity = Vector3.zero;
+        transform.rotation = Quaternion.identity;
+        transform.position = position;
     }
 
     private IEnumerator Delay(float delay)
